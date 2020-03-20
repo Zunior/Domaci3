@@ -11,7 +11,8 @@ import service.impl.MessageServiceImpl;
 
 @ComponentScan(basePackages = {
 		"repository",
-		"service"
+		"service",
+		"main"
 })
 public class MyBeanConfig {
 	

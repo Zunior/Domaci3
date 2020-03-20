@@ -2,22 +2,25 @@ package main;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import config.MyBeanConfig;
 import repository.IRepository;
 import service.MessageService;
 
+@Component(value = "main")
 public class Main {
 	
 	public static void main(String[] args) {
 		//2. main ne kreiramo preko new operatora
-		Main main = new Main();
-		main.annotationConfig();
-		main.saveMessage("Gladan sam!!!", "xml");
+		BeanFactory container = new AnnotationConfigApplicationContext(MyBeanConfig.class);
+		Main main = container.getBean("main", Main.class);
+//		main.annotationConfig(container);
+		main.saveMessage("Gladan sam!!!", "xml");//promeniti string po potrebi xml ili txt
 	}
 
-	private void annotationConfig() {
-		BeanFactory container = new AnnotationConfigApplicationContext(MyBeanConfig.class);
+	private void annotationConfig(BeanFactory container) {
 		IRepository txtRepository = (IRepository)container.getBean("txtRepository");
 		txtRepository.save("My plain message!");
 		
